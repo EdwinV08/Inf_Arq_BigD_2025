@@ -1,0 +1,31 @@
+name: Big Data Ingestion
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Ejecuta el proceso todos los días a medianoche UTC
+  workflow_dispatch:  # Permite ejecutar el workflow manualmente desde GitHub
+
+jobs:
+  ingest_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛠️ Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: 📦 Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📥 Instalar dependencias
+        run: |
+          pip install requests pandas openpyxl
+
+      - name: 🚀 Ejecutar el script de ingesta
+        run: python src/ingestion.py
+
+      - name: 📂 Subir artefactos generados
+        uses: actions/upload-artifact@v3
+        with:
+          name: archivos_generados
+          path: src/static/

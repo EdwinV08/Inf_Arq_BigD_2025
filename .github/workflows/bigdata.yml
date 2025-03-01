@@ -25,7 +25,7 @@ jobs:
         run: python src/ingestion.py
 
       - name: 📂 Subir artefactos generados
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: archivos_generados
           path: src/static/
